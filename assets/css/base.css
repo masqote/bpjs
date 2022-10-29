@@ -1,0 +1,27 @@
+/* eslint-disable */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-base {
+  @apply focus:ring-1 focus:bg-white w-full focus:shadow-xl hover:ring-1 border px-3 py-1.5 focus:outline-none bg-gray-100;
+}
+
+.form-error {
+  @apply ring-2 ring-red-400 shadow-md;
+}
+
+.form-success {
+  @apply ring-1 ring-green-400 shadow-md;
+}
+
+/* .form-disabled {
+  @apply bg-secondary-light;
+}
+
+.form-none {
+  @apply appearance-none;
+} */
+
+/* eslint-disable */
