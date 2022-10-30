@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-20">
     <!-- PERSONAL DETAILS -->
     <div class="p-10 space-y-2">
       <div>
@@ -154,7 +154,67 @@
       </div>
     </div>
 
-    PROFESSIONAL SUMMARY
+    <!-- PROFESSIONAL SUMMARY -->
+    <div class="px-10 space-y-2">
+      <div>
+        <h3 class="font-bold text-xl">Professional Summary</h3>
+        <p class="text-gray-400 text-sm">
+          Write 2-4 short & energetic sentences to interest the reader! Mention
+          your role,experience & most importantly - your biggest achievements,
+          best qualities and skills.
+        </p>
+      </div>
+      <ckeditor v-model="editorData" :config="editorConfig"></ckeditor>
+    </div>
+
+    <!-- EMPLOYEMENT HISTORY -->
+    <div class="px-10 pt-10 space-y-2">
+      <div>
+        <h3 class="font-bold text-xl">Employement History</h3>
+        <p class="text-gray-400 text-sm">
+          Show your relevant experience (last 10 years). Use bullet points to
+          note your achievements, if possible - use numbers/facts (Achieved X,
+          measured by Y, by doing Z)
+        </p>
+        <div class="p-4">
+          <div v-for="(i, index) in form.employeeHistory" :key="index">
+            <AccordionDefault>
+              <template v-slot:title>
+                <span class="font-semibold text-sm">{{
+                  i.job ?? '(not specified)'
+                }}</span>
+              </template>
+              <template v-slot:content>
+                <div class="space-x-6 w-full flex flex-row justify-center">
+                  <div class="flex flex-col space-y-2 w-1/2">
+                    <div class="flex flex-row space-x-2 items-center">
+                      <label class="text-gray-400 text-sm">Job Title</label>
+                    </div>
+                    <div>
+                      <InputText v-model="i.job" required />
+                    </div>
+                  </div>
+                  <div class="flex flex-col space-y-2 w-1/2">
+                    <div class="flex flex-row space-x-2 items-center">
+                      <label class="text-gray-400 text-sm">Postal Code</label>
+                    </div>
+                    <div>
+                      <InputText v-model="i.employer" required />
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </AccordionDefault>
+          </div>
+          <button
+            @click="addEmployeeHistory"
+            class="text-sm font-semibold text-blue-600 hover:text-blue-800"
+          >
+            + Add employee
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -163,6 +223,11 @@ export default {
   name: 'IndexPage',
   data() {
     return {
+      editorData: '<p>Content of the editor.asdasdasd</p>',
+      editorConfig: {
+        // The configuration of the editor.
+      },
+
       countries: [
         {
           id: 1,
@@ -198,8 +263,24 @@ export default {
       form: {
         country: null,
         city: null,
+        employeeHistory: [],
       },
     }
+  },
+  created: function () {
+    let i = 0
+    for (i = 0; i < this.form.employeeHistory.length; i++) {
+      this.$set(this.form.employeeHistory, i, 0) // This is the vuejs-way of setting array values
+    }
+  },
+
+  methods: {
+    addEmployeeHistory() {
+      this.form.employeeHistory.push({
+        job: null,
+        employer: null,
+      })
+    },
   },
 }
 </script>
