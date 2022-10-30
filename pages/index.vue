@@ -176,15 +176,20 @@
           note your achievements, if possible - use numbers/facts (Achieved X,
           measured by Y, by doing Z)
         </p>
-        <div class="p-4">
-          <div v-for="(i, index) in form.employeeHistory" :key="index">
-            <AccordionDefault>
-              <template v-slot:title>
+      </div>
+      <div class="space-y-2">
+        <div v-for="(i, index) in form.employeeHistory" :key="index">
+          <AccordionDefault>
+            <template v-slot:title>
+              <div class="p-2 flex flex-col items-start">
                 <span class="font-semibold text-sm">{{
-                  i.job ?? '(not specified)'
+                  i.job ?? '(Not specified)'
                 }}</span>
-              </template>
-              <template v-slot:content>
+                <span class="text-gray-400 text-sm">Jul 2022 - Jul 2030</span>
+              </div>
+            </template>
+            <template v-slot:content>
+              <div class="px-4 space-y-3">
                 <div class="space-x-6 w-full flex flex-row justify-center">
                   <div class="flex flex-col space-y-2 w-1/2">
                     <div class="flex flex-row space-x-2 items-center">
@@ -196,23 +201,77 @@
                   </div>
                   <div class="flex flex-col space-y-2 w-1/2">
                     <div class="flex flex-row space-x-2 items-center">
-                      <label class="text-gray-400 text-sm">Postal Code</label>
+                      <label class="text-gray-400 text-sm">Employer</label>
                     </div>
                     <div>
                       <InputText v-model="i.employer" required />
                     </div>
                   </div>
                 </div>
-              </template>
-            </AccordionDefault>
-          </div>
-          <button
-            @click="addEmployeeHistory"
-            class="text-sm font-semibold text-blue-600 hover:text-blue-800"
-          >
-            + Add employee
-          </button>
+
+                <div class="space-x-6 w-full flex flex-row justify-center">
+                  <div class="w-1/2 flex-col flex space-y-2">
+                    <div class="flex flex-row space-x-2 items-center">
+                      <label class="text-gray-400 text-sm"
+                        >Start & End Date</label
+                      >
+                      <TooltipsDefault text="Mulai dan Terakhir bekerja" />
+                    </div>
+                    <div class="flex flex-row space-x-2 w-full justify-center">
+                      <div>
+                        <InputText
+                          placeholder="MM / YYYY"
+                          v-model="i.start"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <InputText
+                          placeholder="MM / YYYY"
+                          v-model="i.end"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-1/2 flex-col flex space-y-2">
+                    <div class="flex flex-row space-x-2 items-center">
+                      <label class="text-gray-400 text-sm">City</label>
+                    </div>
+                    <div>
+                      <InputSelect :resources="cities" required />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space-x-6 w-full flex flex-row justify-center">
+                  <div class="flex flex-col space-y-2 w-1/2">
+                    <div class="flex flex-row space-x-2 items-center">
+                      <label class="text-gray-400 text-sm">Description</label>
+                    </div>
+                    <div>
+                      <InputText v-model="i.descrption" required />
+                    </div>
+                  </div>
+                  <div class="flex flex-col space-y-2 w-1/2">
+                    <div class="flex flex-row space-x-2 items-center">
+                      <label class="text-gray-400 text-sm">Employer</label>
+                    </div>
+                    <div>
+                      <InputText v-model="i.description" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </AccordionDefault>
         </div>
+        <button
+          @click="addEmployeeHistory"
+          class="text-sm font-semibold text-blue-600 hover:text-blue-800"
+        >
+          + Add employee
+        </button>
       </div>
     </div>
   </div>
@@ -267,18 +326,15 @@ export default {
       },
     }
   },
-  created: function () {
-    let i = 0
-    for (i = 0; i < this.form.employeeHistory.length; i++) {
-      this.$set(this.form.employeeHistory, i, 0) // This is the vuejs-way of setting array values
-    }
-  },
 
   methods: {
     addEmployeeHistory() {
       this.form.employeeHistory.push({
         job: null,
         employer: null,
+        start: null,
+        end: null,
+        description: null,
       })
     },
   },

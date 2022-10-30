@@ -52,7 +52,7 @@ export default {
       default: null,
     },
     placeholder: {
-      default: null,
+      default: 'Please Choose',
       type: String,
     },
   },
