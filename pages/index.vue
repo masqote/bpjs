@@ -48,6 +48,9 @@
               >
                 {{ form.photo ? 'Change Photo' : 'Upload Photo' }}
               </button>
+              <div v-show="validate.photo" class="text-red-600 text-sm">
+                Photo hanya dalam format image!
+              </div>
             </div>
           </div>
         </div>
@@ -353,14 +356,32 @@ export default {
         city: null,
         employeeHistory: [],
       },
+      validate: {
+        photo: false,
+      },
     }
   },
 
   methods: {
+    getExtension(filename) {
+      const parts = filename.split('/')
+      return parts
+      // return parts[parts.length - 1];
+    },
+
     uploadPhoto(e) {
       const file = e.target.files
+      const ext = this.getExtension(file[0].type)
 
-      this.form.photo = file[0]
+      if (ext[0] !== 'image') {
+        this.validate.photo = true
+        this.form.photo = null
+      } else {
+        this.validate.photo = false
+        this.form.photo = file[0]
+      }
+
+      // console.log(file[0].type)
     },
     addEmployeeHistory() {
       this.form.employeeHistory.push({
