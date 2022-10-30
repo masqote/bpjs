@@ -15,12 +15,39 @@
             <InputText required />
           </div>
         </div>
-        <div class="flex flex-col space-y-2 w-1/2">
-          <div class="w-full h-full flex items-end">
+        <div class="flex flex-row items-center space-y-2 w-1/2">
+          <div class="w-1/4 h-full flex items-end">
             <div
               class="h-3/4 bg-gray-300 w-16 rounded flex items-center justify-center"
             >
               <img src="~/assets/svg/user.svg" class="w-8 h-8" />
+            </div>
+          </div>
+          <div class="w-3/4 pt-4 px-2">
+            <input
+              @change="uploadPhoto"
+              type="file"
+              ref="photo"
+              class="hidden"
+            />
+            <div class="flex flex-col items-start">
+              <div
+                class="flex flex-row items-center space-x-3"
+                v-if="form.photo"
+              >
+                <span>{{ form.photo.name }}</span>
+                <span
+                  @click="form.photo = null"
+                  class="cursor-pointer text-red-600 border -mt-4 px-2"
+                  >x</span
+                >
+              </div>
+              <button
+                class="text-sm text-blue-400"
+                @click="$refs['photo'].click()"
+              >
+                {{ form.photo ? 'Change Photo' : 'Upload Photo' }}
+              </button>
             </div>
           </div>
         </div>
@@ -181,15 +208,16 @@
         <div v-for="(i, index) in form.employeeHistory" :key="index">
           <AccordionDefault>
             <template v-slot:title>
-              <div class="p-2 flex flex-col items-start">
-                <span class="font-semibold text-sm">{{
-                  i.job ?? '(Not specified)'
-                }}</span>
+              <div class="px-2 flex flex-col items-start">
+                <span class="font-semibold text-sm"
+                  >{{ i.job ?? '(Not specified)' }}
+                  {{ i.employer ? 'at ' + i.employer : '' }}</span
+                >
                 <span class="text-gray-400 text-sm">Jul 2022 - Jul 2030</span>
               </div>
             </template>
             <template v-slot:content>
-              <div class="px-4 space-y-3">
+              <div class="px-2 space-y-3">
                 <div class="space-x-6 w-full flex flex-row justify-center">
                   <div class="flex flex-col space-y-2 w-1/2">
                     <div class="flex flex-row space-x-2 items-center">
@@ -320,6 +348,7 @@ export default {
         },
       ],
       form: {
+        photo: null,
         country: null,
         city: null,
         employeeHistory: [],
@@ -328,6 +357,11 @@ export default {
   },
 
   methods: {
+    uploadPhoto(e) {
+      const file = e.target.files
+
+      this.form.photo = file[0]
+    },
     addEmployeeHistory() {
       this.form.employeeHistory.push({
         job: null,
