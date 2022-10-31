@@ -9893,6 +9893,11 @@ vue-meta@^2.4.0:
   dependencies:
     deepmerge "^4.2.2"
 
+vue-month-picker@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/vue-month-picker/-/vue-month-picker-1.7.1.tgz#b717e92e1c614afde35278b173e2a93f4cda0bb6"
+  integrity sha512-AN+yi6K05ASEw+ywfSbQ3Wu+oquTx5DwfATz0fFknh4+g87m7m3pPSZLTGcv1iBFyNXI9uVExkdQn+Y53AZLFQ==
+
 vue-no-ssr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz"

@@ -178,7 +178,7 @@
             <TooltipsDefault text="Format Tanggal : DD/MM/YYYY" />
           </div>
           <div>
-            <InputText required />
+            <InputDate required v-model="form.dateOfBirth" />
           </div>
         </div>
       </div>
@@ -216,7 +216,12 @@
                   >{{ i.job ?? '(Not specified)' }}
                   {{ i.employer ? 'at ' + i.employer : '' }}</span
                 >
-                <span class="text-gray-400 text-sm">Jul 2022 - Jul 2030</span>
+                <span class="text-gray-400 text-sm">
+                  {{
+                    i.start ? i.start.month + ' ' + i.start.year + ' - ' : ''
+                  }}
+                  {{ i.end ? i.end.month + ' ' + i.end.year : '' }}</span
+                >
               </div>
             </template>
             <template v-slot:content>
@@ -249,19 +254,19 @@
                       <TooltipsDefault text="Mulai dan Terakhir bekerja" />
                     </div>
                     <div class="flex flex-row space-x-2 w-full justify-center">
-                      <div>
-                        <InputText
-                          placeholder="MM / YYYY"
+                      <div class="w-1/2">
+                        <month-picker-input
+                          no-default
+                          date-format="%n / %Y"
                           v-model="i.start"
-                          required
-                        />
+                        ></month-picker-input>
                       </div>
-                      <div>
-                        <InputText
-                          placeholder="MM / YYYY"
+                      <div class="w-1/2">
+                        <month-picker-input
+                          no-default
+                          date-format="%n / %Y"
                           v-model="i.end"
-                          required
-                        />
+                        ></month-picker-input>
                       </div>
                     </div>
                   </div>
@@ -280,20 +285,12 @@
                 </div>
 
                 <div class="space-x-6 w-full flex flex-row justify-center">
-                  <div class="flex flex-col space-y-2 w-1/2">
+                  <div class="flex flex-col space-y-2 w-full">
                     <div class="flex flex-row space-x-2 items-center">
                       <label class="text-gray-400 text-sm">Description</label>
                     </div>
                     <div>
                       <InputText v-model="i.descrption" required />
-                    </div>
-                  </div>
-                  <div class="flex flex-col space-y-2 w-1/2">
-                    <div class="flex flex-row space-x-2 items-center">
-                      <label class="text-gray-400 text-sm">Employer</label>
-                    </div>
-                    <div>
-                      <InputText v-model="i.description" required />
                     </div>
                   </div>
                 </div>
@@ -328,7 +325,12 @@
                   >{{ i.degree ?? '(Not specified)' }}
                   {{ i.degree ? 'at ' + i.school : '' }}</span
                 >
-                <span class="text-gray-400 text-sm">Jul 2022 - Jul 2030</span>
+                <span class="text-gray-400 text-sm"
+                  >{{
+                    i.start ? i.start.month + ' ' + i.start.year + ' - ' : ''
+                  }}
+                  {{ i.end ? i.end.month + ' ' + i.end.year : '' }}</span
+                >
               </div>
             </template>
             <template v-slot:content>
@@ -361,19 +363,19 @@
                       <TooltipsDefault text="Mulai dan Terakhir bekerja" />
                     </div>
                     <div class="flex flex-row space-x-2 w-full justify-center">
-                      <div>
-                        <InputText
-                          placeholder="MM / YYYY"
+                      <div class="w-1/2">
+                        <month-picker-input
+                          no-default
+                          date-format="%n / %Y"
                           v-model="i.start"
-                          required
-                        />
+                        ></month-picker-input>
                       </div>
-                      <div>
-                        <InputText
-                          placeholder="MM / YYYY"
+                      <div class="w-1/2">
+                        <month-picker-input
+                          no-default
+                          date-format="%n / %Y"
                           v-model="i.end"
-                          required
-                        />
+                        ></month-picker-input>
                       </div>
                     </div>
                   </div>
@@ -392,20 +394,12 @@
                 </div>
 
                 <div class="space-x-6 w-full flex flex-row justify-center">
-                  <div class="flex flex-col space-y-2 w-1/2">
+                  <div class="flex flex-col space-y-2 w-full">
                     <div class="flex flex-row space-x-2 items-center">
                       <label class="text-gray-400 text-sm">Description</label>
                     </div>
                     <div>
                       <InputText v-model="i.descrption" required />
-                    </div>
-                  </div>
-                  <div class="flex flex-col space-y-2 w-1/2">
-                    <div class="flex flex-row space-x-2 items-center">
-                      <label class="text-gray-400 text-sm">Employer</label>
-                    </div>
-                    <div>
-                      <InputText v-model="i.description" required />
                     </div>
                   </div>
                 </div>
@@ -527,6 +521,15 @@
     </div>
   </div>
 </template>
+
+<style>
+.month-picker-input {
+  @apply bg-gray-100 p-2 rounded-none w-full !important;
+}
+.month-picker-input-container {
+  @apply w-full min-w-0 !important;
+}
+</style>
 
 <script>
 export default {
@@ -672,6 +675,11 @@ export default {
       },
     }
   },
+  watch: {
+    'form.employeeHistory'(val) {
+      console.log(val)
+    },
+  },
   methods: {
     colorSkill(val) {
       switch (val) {
@@ -752,7 +760,7 @@ export default {
       })
     },
     showLog() {
-      console.log(this.form.skillSelected)
+      console.log(this.form)
     },
   },
 }

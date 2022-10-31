@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'hehe',
+    title: 'medhy',
     htmlAttrs: {
       lang: 'en',
     },
@@ -21,7 +21,10 @@ export default {
   css: ['@/assets/css/base.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '~plugins/quill.js', ssr: false }],
+  plugins: [
+    { src: '~plugins/quill.js', ssr: false },
+    { src: '~plugins/month-picker.js', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
